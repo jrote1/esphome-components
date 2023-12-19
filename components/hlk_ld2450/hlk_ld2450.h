@@ -23,6 +23,7 @@ namespace esphome
       void update() override {
         if (this->illuminance_sensor_ != nullptr)
           this->illuminance_sensor_->publish_state(42.0);
+        this->publish_state(50.0);
       }
     protected:
       /// Read the illuminance value and store the calculated ambient illuminance in t_fine.
