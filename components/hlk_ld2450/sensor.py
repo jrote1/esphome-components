@@ -7,6 +7,9 @@ from esphome.const import (
     DEVICE_CLASS_ILLUMINANCE,
     STATE_CLASS_MEASUREMENT,
     UNIT_LUX,
+    UNIT_CENTIMETER,
+    DEVICE_CLASS_DISTANCE,
+    CONF_DISTANCE
 )
 
 DEPENDENCIES = ["uart"]
@@ -24,11 +27,11 @@ CONFIG_SCHEMA = cv.All(
     cv.Schema(
         {
             cv.Required(CONF_ID): cv.declare_id(HLKLD2450),
-            cv.Optional(CONF_ILLUMINANCE): sensor.sensor_schema(
+            cv.Optional(CONF_DISTANCE): sensor.sensor_schema(
                 HLKLD2450,
-                unit_of_measurement=UNIT_LUX,
+                unit_of_measurement=UNIT_CENTIMETER,
                 accuracy_decimals=1,
-                device_class=DEVICE_CLASS_ILLUMINANCE,
+                device_class=DEVICE_CLASS_DISTANCE,
                 state_class=STATE_CLASS_MEASUREMENT,
             )
         }
@@ -44,6 +47,6 @@ async def to_code(config):
     await cg.register_component(var, config)
     await uart.register_uart_device(var, config)
     
-    if voltage_config := config.get(CONF_ILLUMINANCE):
-        sens = await sensor.new_sensor(voltage_config)
-        cg.add(var.set_illuminance_sensor(sens))
+    if distance_config := config.get(CONF_DISTANCE):
+        sens = await sensor.new_sensor(distance_config)
+        cg.add(var.set_distance_sensor(sens))
