@@ -1,14 +1,10 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import uart, sensor
-from esphome.const import (
-    DEVICE_CLASS_ILLUMINANCE,
-    STATE_CLASS_MEASUREMENT,
-    UNIT_LUX,
-)
+from esphome.const import CONF_ID
 
 DEPENDENCIES = ["uart"]
-CODEOWNERS = ["@OttoWinter"]
+CODEOWNERS = ["@jrote1"]
 
 hlk_ld2450_ns = cg.esphome_ns.namespace("hlk_ld2450")
 
@@ -16,14 +12,8 @@ HLKLD2450 = hlk_ld2450_ns.class_(
     "HLKLD2450", sensor.Sensor, cg.PollingComponent, uart.UARTDevice
 )
 
-CONFIG_SCHEMA = (
-    sensor.sensor_schema(
-        HLKLD2450,
-        unit_of_measurement=UNIT_LUX,
-        accuracy_decimals=1,
-        device_class=DEVICE_CLASS_ILLUMINANCE,
-        state_class=STATE_CLASS_MEASUREMENT,
-    )
+CONFIG_SCHEMA = cv.All(
+    cv.Schema({})
     .extend(
         {
             cv.Optional("resolution"): cv.invalid(
@@ -40,6 +30,6 @@ CONFIG_SCHEMA = (
 
 
 async def to_code(config):
-    var = await sensor.new_sensor(config)
+    var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
     await uart.register_uart_device(var, config)
