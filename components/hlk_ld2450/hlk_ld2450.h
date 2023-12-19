@@ -37,6 +37,7 @@ namespace esphome
         if (this->distance_sensor_ != nullptr)
           this->distance_sensor_->publish_state(42.0);
       }
+      std::vector<int> bytes;
 
       void processPacket()
       {
@@ -46,8 +47,8 @@ namespace esphome
         if ((bytes[0] == 0xAA) && (bytes[1] == 0xAA) && (bytes[2] == 0x00))
         {
 
-          //presence_sensor->publish_state(0);
-          //motion_sensor->publish_state(0);
+          // presence_sensor->publish_state(0);
+          // motion_sensor->publish_state(0);
 
           return;
         }
@@ -55,8 +56,8 @@ namespace esphome
         if ((bytes[0] == 0xAA) && (bytes[1] == 0xAA) && (bytes[2] == 0x01))
         {
 
-          //presence_sensor->publish_state(1);
-          //motion_sensor->publish_state(1);
+          // presence_sensor->publish_state(1);
+          // motion_sensor->publish_state(1);
 
           unsigned char byte3 = bytes[3];
           unsigned char byte4 = bytes[4];
@@ -72,8 +73,8 @@ namespace esphome
         if ((bytes[0] == 0xAA) && (bytes[1] == 0xAA) && (bytes[2] == 0x02))
         {
 
-          //presence_sensor->publish_state(1);
-          //motion_sensor->publish_state(0);
+          // presence_sensor->publish_state(1);
+          // motion_sensor->publish_state(0);
 
           unsigned char byte3 = bytes[3];
           unsigned char byte4 = bytes[4];
@@ -125,11 +126,11 @@ namespace esphome
 
           int unocc_time = static_cast<int>(unocchex);
 
-          //max_motion_sensor->publish_state(max_m);
-          //min_motion_sensor->publish_state(min_m);
-          //max_presence_sensor->publish_state(max_p);
-          //min_presence_sensor->publish_state(min_p);
-          //unocc_time_sensor->publish_state(unocc_time / 10);
+          // max_motion_sensor->publish_state(max_m);
+          // min_motion_sensor->publish_state(min_m);
+          // max_presence_sensor->publish_state(max_p);
+          // min_presence_sensor->publish_state(min_p);
+          // unocc_time_sensor->publish_state(unocc_time / 10);
 
           return;
         }
