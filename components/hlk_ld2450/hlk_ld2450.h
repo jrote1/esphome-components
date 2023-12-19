@@ -22,18 +22,15 @@ namespace esphome
       }
       void update() override
       {
-        void loop() override
+        while (available())
         {
-          while (available())
-          {
-            bytes.push_back(read());
+          bytes.push_back(read());
 
-            // End of Frame is 0x55 0x55
-            if ((bytes[bytes.size() - 2] == 0x55 && bytes[bytes.size() - 1] == 0x55) || (bytes[bytes.size() - 4] == 0x04 && bytes[bytes.size() - 3] == 0x03 && bytes[bytes.size() - 2] == 0x02 && bytes[bytes.size() - 1] == 0x01))
-            {
-              processPacket();
-              bytes.clear();
-            }
+          // End of Frame is 0x55 0x55
+          if ((bytes[bytes.size() - 2] == 0x55 && bytes[bytes.size() - 1] == 0x55) || (bytes[bytes.size() - 4] == 0x04 && bytes[bytes.size() - 3] == 0x03 && bytes[bytes.size() - 2] == 0x02 && bytes[bytes.size() - 1] == 0x01))
+          {
+            processPacket();
+            bytes.clear();
           }
         }
 
@@ -68,7 +65,7 @@ namespace esphome
 
           int distanceCm = static_cast<int>(distanceHex);
 
-          this->distance_sensor->publish_state(distanceCm);
+          this->distance_sensor_->publish_state(distanceCm);
           return;
         }
 
@@ -85,7 +82,7 @@ namespace esphome
 
           int distanceCm = static_cast<int>(distanceHex);
 
-          distance_sensor->publish_state(distanceCm);
+          distance_sensor_->publish_state(distanceCm);
 
           return;
         }
