@@ -4,10 +4,10 @@
 
 namespace esphome
 {
-  namespace serial
+  namespace hlk_ld2450
   {
 
-    class HLKLD2450Component : public PollingComponent, public sensor::Sensor, public uart::UARTDevice
+    class HLKLD2450 : public PollingComponent, public sensor::Sensor, public uart::UARTDevice
     {
     public:
       // constructor
@@ -22,5 +22,5 @@ namespace esphome
       }
     };
 
-  } // namespace serial
-} // name
+  } // namespace hlk_ld2450
+} // namespace esphome
