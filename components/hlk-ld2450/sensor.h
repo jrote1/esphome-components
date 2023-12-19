@@ -7,7 +7,7 @@ namespace esphome
   namespace serial
   {
 
-    class HLKLD2450 : public PollingComponent, public sensor::Sensor, public uart::UARTDevice
+    class HLKLD2450Component : public PollingComponent, public sensor::Sensor, public uart::UARTDevice
     {
     public:
       // constructor
