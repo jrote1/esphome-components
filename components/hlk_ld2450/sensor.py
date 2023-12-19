@@ -3,7 +3,10 @@ import esphome.config_validation as cv
 from esphome.components import uart, sensor
 from esphome.const import (
     CONF_ID,
-    CONF_TEMPERATURE
+    CONF_TEMPERATURE,
+    DEVICE_CLASS_ILLUMINANCE,
+    STATE_CLASS_MEASUREMENT,
+    UNIT_LUX,
 )
 
 DEPENDENCIES = ["uart"]
@@ -19,7 +22,13 @@ CONFIG_SCHEMA = cv.All(
     cv.Schema(
         {
             cv.Required(CONF_ID): cv.declare_id(HLKLD2450),
-            cv.Optional("illuminance"): sensor.sensor_schema()
+            cv.Optional("illuminance"): sensor.sensor_schema(
+                HLKLD2450,
+                unit_of_measurement=UNIT_LUX,
+                accuracy_decimals=1,
+                device_class=DEVICE_CLASS_ILLUMINANCE,
+                state_class=STATE_CLASS_MEASUREMENT,
+            )
         }
     )
     .extend(cv.COMPONENT_SCHEMA)
