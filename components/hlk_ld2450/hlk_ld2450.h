@@ -32,9 +32,6 @@ namespace esphome
             bytes.clear();
           }
         }
-
-        if (this->distance_sensor_ != nullptr)
-          this->distance_sensor_->publish_state(42.0);
       }
       std::vector<int> bytes;
 
