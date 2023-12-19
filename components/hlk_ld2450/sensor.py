@@ -13,7 +13,12 @@ HLKLD2450 = hlk_ld2450_ns.class_(
 )
 
 CONFIG_SCHEMA = cv.All(
-    cv.Schema({})
+    cv.Schema(
+        {
+            cv.Required(CONF_ID): cv.declare_id(HLKLD2450),
+        }
+    )
+    .extend(cv.COMPONENT_SCHEMA)
     .extend(
         {
             cv.Optional("resolution"): cv.invalid(
