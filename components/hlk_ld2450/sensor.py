@@ -18,7 +18,7 @@ CODEOWNERS = ["@jrote1"]
 hlk_ld2450_ns = cg.esphome_ns.namespace("hlk_ld2450")
 
 HLKLD2450 = hlk_ld2450_ns.class_(
-    "HLKLD2450", sensor.Sensor, cg.PollingComponent, uart.UARTDevice
+    "HLKLD2450", sensor.Sensor, cg.Component, uart.UARTDevice
 )
 
 CONF_ILLUMINANCE = "illuminance"

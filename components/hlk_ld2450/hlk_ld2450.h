@@ -9,18 +9,17 @@ namespace esphome
   namespace hlk_ld2450
   {
 
-    class HLKLD2450 : public PollingComponent, public sensor::Sensor, public uart::UARTDevice
+    class HLKLD2450 : public Component, public sensor::Sensor, public uart::UARTDevice
     {
     public:
       // constructor
-      HLKLD2450() : PollingComponent(15000) {}
       void set_distance_sensor(sensor::Sensor *distance_sensor) { distance_sensor_ = distance_sensor; }
 
       void setup() override
       {
         // This will be called by App.setup()
       }
-      void update() override
+      void loop() override
       {
         while (available())
         {
