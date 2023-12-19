@@ -3,13 +3,10 @@ import esphome.config_validation as cv
 from esphome.components import uart, sensor
 from esphome.const import (
     CONF_ID,
-    CONF_TEMPERATURE,
-    DEVICE_CLASS_ILLUMINANCE,
     STATE_CLASS_MEASUREMENT,
-    UNIT_LUX,
     UNIT_CENTIMETER,
     DEVICE_CLASS_DISTANCE,
-    CONF_DISTANCE
+    CONF_DISTANCE,
 )
 
 DEPENDENCIES = ["uart"]
@@ -21,7 +18,9 @@ HLKLD2450 = hlk_ld2450_ns.class_(
     "HLKLD2450", sensor.Sensor, cg.Component, uart.UARTDevice
 )
 
-CONF_ILLUMINANCE = "illuminance"
+CONF_PRESENCE = "presence"
+CONF_MOTION = "motion"
+UNIT_BOOL = "true/false"
 
 CONFIG_SCHEMA = cv.All(
     cv.Schema(
@@ -33,7 +32,9 @@ CONFIG_SCHEMA = cv.All(
                 accuracy_decimals=1,
                 device_class=DEVICE_CLASS_DISTANCE,
                 state_class=STATE_CLASS_MEASUREMENT,
-            )
+            ),
+            cv.Optional(CONF_PRESENCE): cv.float_range(min=0, max=1),
+            cv.Optional(CONF_MOTION): cv.float_range(min=0, max=1),
         }
     )
     .extend(cv.COMPONENT_SCHEMA)
@@ -49,3 +50,11 @@ async def to_code(config):
     if distance_config := config.get(CONF_DISTANCE):
         sens = await sensor.new_sensor(distance_config)
         cg.add(var.set_distance_sensor(sens))
+    
+    if presence_config := config.get(CONF_PRESENCE):
+        sens = await sensor.new_sensor(presence_config)
+        cg.add(var.set_presence_sensor(sens))
+    
+    if motion_config := config.get(CONF_MOTION):
+        sens = await sensor.new_sensor(motion_config)
+        cg.add(var.set_motion_sensor(sens))

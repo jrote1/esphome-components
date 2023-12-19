@@ -14,6 +14,8 @@ namespace esphome
     public:
       // constructor
       void set_distance_sensor(sensor::Sensor *distance_sensor) { distance_sensor_ = distance_sensor; }
+      void set_presence_sensor(sensor::Sensor *presence_sensor) { presence_sensor_ = presence_sensor; }
+      void set_motion_sensor(sensor::Sensor *motion_sensor) { motion_sensor_ = motion_sensor; }
 
       void setup() override
       {
@@ -43,8 +45,10 @@ namespace esphome
         if ((bytes[0] == 0xAA) && (bytes[1] == 0xAA) && (bytes[2] == 0x00))
         {
 
-          // presence_sensor->publish_state(0);
-          // motion_sensor->publish_state(0);
+          if (this->presence_sensor_ != nullptr)
+            presence_sensor_->publish_state(0);
+          if (this->motion_sensor_ != nullptr)
+            motion_sensor_->publish_state(0);
 
           return;
         }
@@ -52,8 +56,10 @@ namespace esphome
         if ((bytes[0] == 0xAA) && (bytes[1] == 0xAA) && (bytes[2] == 0x01))
         {
 
-          // presence_sensor->publish_state(1);
-          // motion_sensor->publish_state(1);
+          if (this->presence_sensor_ != nullptr)
+            presence_sensor_->publish_state(1);
+          if (this->motion_sensor_ != nullptr)
+            motion_sensor_->publish_state(1);
 
           unsigned char byte3 = bytes[3];
           unsigned char byte4 = bytes[4];
@@ -69,8 +75,10 @@ namespace esphome
         if ((bytes[0] == 0xAA) && (bytes[1] == 0xAA) && (bytes[2] == 0x02))
         {
 
-          // presence_sensor->publish_state(1);
-          // motion_sensor->publish_state(0);
+          if (this->presence_sensor_ != nullptr)
+            presence_sensor_->publish_state(1);
+          if (this->motion_sensor_ != nullptr)
+            motion_sensor_->publish_state(0);
 
           unsigned char byte3 = bytes[3];
           unsigned char byte4 = bytes[4];
@@ -137,6 +145,8 @@ namespace esphome
       float read_distance_(const uint8_t *data, int32_t *t_fine);
 
       sensor::Sensor *distance_sensor_{nullptr};
+      sensor::Sensor *presence_sensor_{nullptr};
+      sensor::Sensor *motion_sensor_{nullptr};
     };
 
   } // namespace hlk_ld2450
