@@ -33,8 +33,8 @@ CONFIG_SCHEMA = cv.All(
                 device_class=DEVICE_CLASS_DISTANCE,
                 state_class=STATE_CLASS_MEASUREMENT,
             ),
-            cv.Optional(CONF_PRESENCE): cv.float_range(min=0, max=1),
-            cv.Optional(CONF_MOTION): cv.float_range(min=0, max=1),
+            cv.Optional(CONF_PRESENCE): cv.int_range(min=0, max=1),
+            cv.Optional(CONF_MOTION): cv.int_range(min=0, max=1),
         }
     )
     .extend(cv.COMPONENT_SCHEMA)
